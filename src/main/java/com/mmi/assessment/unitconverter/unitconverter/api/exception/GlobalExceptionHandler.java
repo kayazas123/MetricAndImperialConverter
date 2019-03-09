@@ -22,36 +22,27 @@ public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value
-            = { TemperatureConverterException.class, UnitConverterException.class, ConverterNotFoundException.class })
+            = { ConverterNotFoundException.class })
     @Nullable
     public final ResponseEntity<ApiError> handleException(Exception ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
 
         LOGGER.error("Handling " + ex.getClass().getSimpleName() + " due to " + ex.getMessage());
 
-        if (ex instanceof TemperatureConverterException) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
-            TemperatureConverterException te = (TemperatureConverterException) ex;
-
-            return handleConverterException(te, headers, status, request);
-        } else if (ex instanceof UnitConverterException) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
-            UnitConverterException uce = (UnitConverterException) ex;
-
-            return handleConverterException(uce, headers, status, request);
-        } else if (ex instanceof ConverterNotFoundException) {
+        if (ex instanceof ConverterNotFoundException) {
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ConverterNotFoundException cnf = (ConverterNotFoundException) ex;
 
             return handleConverterException(cnf, headers, status, request);
-        }else {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Unknown exception type: " + ex.getClass().getName());
-            }
-
-            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-            return handleExceptionInternal(ex, null, headers, status, request);
         }
+
+        if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Unknown exception type: " + ex.getClass().getName());
+        }
+
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        return handleExceptionInternal(ex, null, headers, status, request);
+
     }
 
     private ResponseEntity<ApiError> handleConverterException(RuntimeException te, HttpHeaders headers, HttpStatus status, WebRequest request) {
