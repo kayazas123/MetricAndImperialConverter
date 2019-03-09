@@ -82,6 +82,7 @@ public class ConverterControllerTestCase {
                 .post("/convert")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
+                .log().all()
                 .body("errors[0]",equalTo("Converter types metre or inchhhhh not found"));
 
     }

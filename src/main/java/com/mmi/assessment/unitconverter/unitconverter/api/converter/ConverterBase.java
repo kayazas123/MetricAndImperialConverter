@@ -11,7 +11,7 @@ public class ConverterBase {
     public static final String FEET_CODES = "\\b+(ft|feet|foot)\\b+";
     public static final String MILES_CODES = "\\b+(mi|mile|miles)\\b+";
     public static final String MILLIMETRE_CODES = "\\b+(mm|millimetre|millimetres)\\b+";
-    public static final String CENTIMETRE_CODES = "\\b+(cm|centimeter|centimeters)\\b+";
+    public static final String CENTIMETRE_CODES = "\\b+(cm|centimetre|centimetres)\\b+";
     public static final String KILOMETRE_CODES = "\\b+(km|kms|kilometres|kilometre)\\b+";
     public static final String METER_CODES = "\\b+(m|mtr|metre|metres)\\b+";
 
@@ -40,7 +40,9 @@ public class ConverterBase {
         double converted = 0.0;
         if (unitTo.matches(INCHES_CODES)) {
             converted = (value / EnumCentimeterToUnits.INCHES.getValue());
-        } else if (unitTo.matches(FEET_CODES)) {
+        }else if (unitTo.matches(METER_CODES)) {
+            converted = (value / EnumCentimeterToUnits.METRE.getValue());
+        }else if (unitTo.matches(FEET_CODES)) {
             converted = (value / EnumCentimeterToUnits.FEET.getValue());
         } else if (unitTo.matches(MILES_CODES)) {
             converted = (value / EnumCentimeterToUnits.MILES.getValue());
@@ -164,9 +166,7 @@ public class ConverterBase {
                 to.matches(MILES_CODES) ||
                 to.matches(MILLIMETRE_CODES) ||
                 to.matches(CENTIMETRE_CODES) ||
-                to.matches(KILOMETRE_CODES) ||
-                to.matches(METER_CODES));
-
+                to.matches(KILOMETRE_CODES));
     }
 
     protected boolean isFromInchesToUnits(String from, String to) {
@@ -177,7 +177,6 @@ public class ConverterBase {
                 to.matches(CENTIMETRE_CODES) ||
                 to.matches(KILOMETRE_CODES) ||
                 to.matches(METER_CODES));
-
     }
 
     protected boolean isFromFeetToUnits(String from, String to) {
@@ -195,6 +194,8 @@ public class ConverterBase {
                 to.matches(INCHES_CODES) ||
                 to.matches(FEET_CODES) ||
                 to.matches(INCHES_CODES) ||
+                to.matches(METER_CODES) ||
+                to.matches(MILLIMETRE_CODES) ||
                 to.matches(CENTIMETRE_CODES));
     }
 
@@ -204,6 +205,7 @@ public class ConverterBase {
                 to.matches(FEET_CODES) ||
                 to.matches(MILLIMETRE_CODES) ||
                 to.matches(INCHES_CODES) ||
+                to.matches(METER_CODES) ||
                 to.matches(KILOMETRE_CODES));
     }
 
@@ -212,6 +214,7 @@ public class ConverterBase {
         return from.matches(MILES_CODES) && (
                 to.matches(INCHES_CODES) ||
                         to.matches(FEET_CODES) ||
+                        to.matches(METER_CODES) ||
                         to.matches(MILLIMETRE_CODES) ||
                         to.matches(CENTIMETRE_CODES) ||
                         to.matches(KILOMETRE_CODES));
@@ -223,6 +226,7 @@ public class ConverterBase {
         return from.matches(MILLIMETRE_CODES) && (to.matches(MILES_CODES) ||
                 to.matches(INCHES_CODES) ||
                 to.matches(FEET_CODES) ||
+                to.matches(METER_CODES) ||
                 to.matches(CENTIMETRE_CODES) ||
                 to.matches(KILOMETRE_CODES));
     }

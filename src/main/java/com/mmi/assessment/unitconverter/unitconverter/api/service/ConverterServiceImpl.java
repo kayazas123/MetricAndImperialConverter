@@ -41,8 +41,10 @@ public class ConverterServiceImpl implements ConverterService {
             } else if(isValidTemperatureTypes(toType)) {
                 return ConverterFactory.getService(EnumConverterType.TEMPERATURE.getType());
             }
-        } else
+        } else {
             throw new ConverterNotFoundException(String.format("Converter types %s or %s not found", fromType, toType));
+        }
+
         return null;
     }
 
